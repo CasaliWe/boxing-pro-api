@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    image: casaliwe/php-mini:1.0
+    container_name: freeladev-app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    restart: unless-stopped
+    command: bash -c "redis-server & umask 002 && cd /var/www/html && if [ ! -f .env ] && [ -f .env.local ]; then cp .env.local .env; fi && composer install && apachectl -D FOREGROUND"
