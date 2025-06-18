@@ -43,26 +43,26 @@ if (!$tokenObj) {
 }
 
 // Buscar os dados do usuário associado ao token
-$usuario = UsuarioRepository::getById($tokenObj->user_id);
+$delete = UsuarioRepository::deleteToken($token);
 
-if (!$usuario) {
-    // Se não encontrar o usuário, retorna um erro
-    http_response_code(404);
+if($delete){
+    $response = [
+        'success' => true
+    ];
+
+    http_response_code(200);
     header('Content-Type: application/json');
-    echo json_encode(['error' => 'Usuário não encontrado']);
+    echo json_encode($response);
+    exit;
+}else{
+    $response = [
+        'success' => false
+    ];
+
+    http_response_code(200);
+    header('Content-Type: application/json');
+    echo json_encode($response);
     exit;
 }
-
-// Retorna apenas os dados solicitados pela documentação (id, nome e email)
-$response = [
-    'id' => $usuario->id,
-    'nome' => $usuario->nome,
-    'email' => $usuario->email,
-    'autenticado' => true,
-];
-
-http_response_code(200);
-header('Content-Type: application/json');
-echo json_encode($response);
 
 
