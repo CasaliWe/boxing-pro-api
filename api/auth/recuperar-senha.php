@@ -67,8 +67,7 @@ try {
 
     // Destinatários
     $mail->setFrom($_ENV['MAIL_USER'], $_ENV['NOME_SITE']);
-    $mail->addAddress($_ENV['MAIL_USER_ADMIN'], $_ENV['NOME_SITE']);
-    $mail->addReplyTo($_ENV['MAIL_USER'], $_ENV['NOME_SITE']);
+    $mail->addAddress($usuario['email'], $_ENV['NOME_SITE']);
 
     // Cabeçalhos adicionais
     $mail->addCustomHeader('X-Mailer', 'PHP/' . phpversion());
